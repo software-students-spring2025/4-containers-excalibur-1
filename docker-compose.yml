@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo
@@ -9,6 +7,18 @@ services:
     volumes:
       - mongo-data:/data/db
     restart: unless-stopped
+
+  machine-learning-client:
+    build: ./machine-learning-client
+    container_name: machine-learning-client
+    depends_on:
+      - mongodb
+    volumes:
+      - ./machine-learning-client:/app  # Mount code so app.py changes are live
+    ports:
+      - "8000:8000"  # Expose Flask API to host machine
+    restart: unless-stopped
+    command: python app.py  # Run app.py in background when container starts
 
 volumes:
   mongo-data:
