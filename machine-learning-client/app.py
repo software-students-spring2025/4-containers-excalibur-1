@@ -5,9 +5,16 @@ import cv2
 import numpy as np
 from PIL import Image
 from io import BytesIO
+from pymongo import MongoClient
+from datetime import datetime
 
 app = Flask(__name__)
 detector = FER()
+
+# MongoDB connection
+client = MongoClient("mongodb://mongodb:27017/")  # Connecting to MongoDB in docker container
+db = client['emotion_db']  # Database name
+collection = db['emotion_data']  # Collection name
 
 @app.route("/")
 def index():
@@ -23,10 +30,20 @@ def predict():
         img_np = np.array(pil_image)
         img_bgr = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
 
-        # Run detection
+        # Run emotion detection
         emotions = detector.detect_emotions(img_bgr)
         if emotions:
             full_emotions = emotions[0]['emotions']  # Get emotion dict
+            
+            # Prepare data to be saved in MongoDB
+            emotion_data = {
+                "emotions": full_emotions,
+                "timestamp": datetime.utcnow()  # Save the timestamp of when the data is collected
+            }
+
+            # Insert into MongoDB
+            collection.insert_one(emotion_data)
+
             return jsonify(full_emotions)
         else:
             return jsonify({"error": "No face detected"})
