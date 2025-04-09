@@ -1,13 +1,43 @@
-from flask import Flask, render_template
-import pymongo
-import os
+from flask import Flask, render_template, request, jsonify
+import base64
+from pymongo import MongoClient
+from datetime import datetime, timezone
 
 app = Flask(__name__)
-
-mongo_uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
-client = pymongo.MongoClient(mongo_uri)
-db = client["face_db"]
+client = MongoClient("mongodb://mongodb:27017/")
+db = client["emotion_db"]
+img_collection = db["images"]
+result_collection = db["results"]
 
 @app.route("/")
-def home():
+def index():
     return render_template("base.html")
+
+@app.route("/upload", methods=["POST"])
+def upload_image():
+    try:
+        data = request.get_json()
+        if not data or "image" not in data:
+            return jsonify({"error": "Invalid image data"}), 400
+
+        image_data = data["image"].split(",")[1]
+        img_doc = {
+            "image": image_data,
+            "timestamp": datetime.now(timezone.utc),
+            "analyzed": False
+        }
+        result = img_collection.insert_one(img_doc)
+        return jsonify({
+            "status": "Image uploaded successfully!",
+            "timestamp": img_doc["timestamp"].isoformat(),
+            "id": str(result.inserted_id)
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/result")
+def get_result():
+    pass
+
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0", port=3001)

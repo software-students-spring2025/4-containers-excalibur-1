@@ -20,5 +20,17 @@ services:
     restart: unless-stopped
     command: python app.py  # Run app.py in background when container starts
 
+  web:
+    build: ./web-app
+    ports:
+      - "3001:5000"
+    volumes:
+      - ./web-app:/app
+    depends_on:
+      - mongodb
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+
 volumes:
   mongo-data:
