@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 from datetime import datetime, timezone
-from emoji import get_emojis_from_faces  # Assuming you want to process with emojis
-
+from emoji import get_emojis_from_faces
 app = Flask(__name__)
 client = MongoClient("mongodb://mongodb:27017/")  # Connect to MongoDB using the service name 'mongodb'
 db = client["emotion_db"]
