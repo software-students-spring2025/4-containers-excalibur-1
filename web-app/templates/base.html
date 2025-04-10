@@ -10,13 +10,14 @@
   <canvas id="canvas" style="display:none;"></canvas>
   <br>
   <button id="capture">Capture & Upload</button>
+  <button id="predict">Predict Emotion</button>  <!-- New button for prediction -->
 
-  <p id="status"></p>
+  <p id="status">Status: Waiting for capture...</p>
   <p id="timestamp"></p>
   <p id="docId"></p>
 
   <script>
-    window.onload = () => {
+    document.addEventListener("DOMContentLoaded", function() {
       const video = document.getElementById("video");
       const canvas = document.getElementById("canvas");
       const statusText = document.getElementById("status");
@@ -26,11 +27,13 @@
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
           video.srcObject = stream;
+          statusText.textContent = "Status: Camera is working!";
         })
         .catch(err => {
-          statusText.textContent = "Camera error: " + err.message;
+          statusText.textContent = "Status: Camera error - " + err.message;
         });
 
+      // Capture & Upload button logic
       document.getElementById("capture").onclick = async () => {
         const ctx = canvas.getContext("2d");
         canvas.width = video.videoWidth;
@@ -40,6 +43,7 @@
         const base64Image = canvas.toDataURL("image/jpeg");
 
         try {
+          // Send the image directly to the /upload route for storage
           const res = await fetch("/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -62,7 +66,41 @@
           statusText.style.color = "red";
         }
       };
-    };
+
+      // Predict Emotion button logic
+      document.getElementById("predict").onclick = async () => {
+        const ctx = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const base64Image = canvas.toDataURL("image/jpeg");
+
+        try {
+          // Send the image directly to the /predict_from_webapp route for emotion prediction
+          const res = await fetch("http://localhost:8000/predict_from_webapp", {  // Update the URL if needed
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ image: base64Image })
+          });
+
+          const result = await res.json();
+
+          if (result.error) {
+            statusText.textContent = "Error: " + result.error;
+            timestampText.textContent = "";
+            docIdText.textContent = "";
+          } else {
+            statusText.textContent = "Emotion detected!";
+            timestampText.textContent = "Emotions: " + JSON.stringify(result);
+            docIdText.textContent = "Results have been saved.";
+          }
+        } catch (err) {
+          statusText.textContent = "Prediction failed: " + err.message;
+          statusText.style.color = "red";
+        }
+      };
+    });
   </script>
 </body>
 </html>

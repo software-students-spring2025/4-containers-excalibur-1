@@ -22,15 +22,18 @@ services:
 
   web:
     build: ./web-app
+    container_name: web-app
     ports:
-      - "3001:5000"
+      - "3001:3001"
     volumes:
       - ./web-app:/app
     depends_on:
       - mongodb
+      - machine-learning-client
     environment:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
+    restart: unless-stopped
 
 volumes:
   mongo-data:
