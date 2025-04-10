@@ -63,9 +63,9 @@ docker-compose up --build -d
 ```
 
 You can access the service through the following link:
-- [The web app](http://localhost:3001)
-- [The ML client](http://localhost:8000)
-- [MongoDB database](http://localhost:27017)
+- The web app: (http://localhost:3001)
+- The ML client: (http://localhost:8000)
+- MongoDB database: (http://localhost:27017)
 
 ### 4. Start Each Service Independently (Run without Docker)
 
