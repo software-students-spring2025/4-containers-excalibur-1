@@ -1,4 +1,9 @@
+import os
 from pymongo import MongoClient
+
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://mongodb:27017/")
+client = MongoClient(MONGO_URI)
+
 
 def test_mongodb_connection_write_and_cleanup():
     client = MongoClient("mongodb://mongodb:27017/")

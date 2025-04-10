@@ -24,9 +24,12 @@ jobs:
         working-directory: web-app
         run: pip install -r requirements.txt
 
-      - name: Run tests for web-app
+      - name: Run web-app tests
         working-directory: web-app
+        env:
+          MONGO_URI: mongodb://127.0.0.1:27017/
         run: pytest tests/
+
 
       # - name: Install dependencies (ML client)
       #   working-directory: machine-learning-client
