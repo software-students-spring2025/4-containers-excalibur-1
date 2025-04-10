@@ -24,7 +24,7 @@ Facemoji is software that recognizes facial expressions in real time, processing
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/software-students-spring2025/4-containers-currently-containing.git
+git clone https://github.com/software-students-spring2025/4-containers-excalibur-1.git
 cd 4-containers-currently-containing
 ```
 
