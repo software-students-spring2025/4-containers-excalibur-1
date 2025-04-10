@@ -1,6 +1,9 @@
 ![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg)
 
 # Containerized App Exercise
+# Containerized App Exercise
+
+![CI Tests](https://github.com/software-students-spring2025/4-containers-excalibur-1/actions/workflows/test.yml/badge.svg)
 
 Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
 
@@ -16,7 +19,7 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 
 ## Project Overview
 
-Facemoji is software that recognizes facial expressions in real time, processing emotions 10 times per second. Based on the strongest emotion detected, it outputs corresponding emoji packs with initiated algorithms, transforming users' facial expressions into real-time emojis.
+Facemoji is software that recognizes facial expressions in real time, processing emotions on yout face. Based on the strongest emotion detected, it outputs corresponding emoji packs with initiated algorithms, transforming users' facial expressions into real-time emojis.
 
 ---
 
@@ -80,4 +83,18 @@ Run ML Client
 cd machine-learning-client
 pip install -r requirements.txt
 python app.py
+```
+
+### 5. Stop and Clean Up Services
+To shut down all running services and clean up resources(consider the large size of client, you may want that), use the following commands:
+
+Stop containers (but keep images and volumes):
+```
+docker-compose down
+```
+
+Stop and remove containers, networks, volumes, and images:
+
+```
+docker-compose down --volumes --rmi all
 ```
