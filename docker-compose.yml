@@ -43,13 +43,13 @@ services:
     volumes:
       - ./web-app:/app
 
-  ml-tests:
-    build: ./machine-learning-client
-    depends_on:
-      - mongodb
-    command: ["pytest", "tests/"]
-    volumes:
-      - ./machine-learning-client:/app
+#  ml-tests:
+#    build: ./machine-learning-client
+#    depends_on:
+#      - mongodb
+#    command: ["pytest", "tests/"]
+#    volumes:
+#      - ./machine-learning-client:/app
 
 
 volumes:

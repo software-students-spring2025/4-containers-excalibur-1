@@ -20,14 +20,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install pipenv
-        run: pip install pipenv
-
-      - name: Install dependencies (web-app)
+      - name: Install dependencies for web-app
         working-directory: web-app
-        run: pipenv install --dev --system
+        run: pip install -r requirements.txt
 
-      - name: Run web-app tests
+      - name: Run tests for web-app
         working-directory: web-app
         run: pytest tests/
 
