@@ -1,9 +1,8 @@
 ![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg)
-
-# Containerized App Exercise
-# Containerized App Exercise
-
 ![CI Tests](https://github.com/software-students-spring2025/4-containers-excalibur-1/actions/workflows/test.yml/badge.svg)
+
+# Containerized App Exercise
+
 
 Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
 
