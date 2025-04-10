@@ -4,6 +4,7 @@ from pymongo import MongoClient
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017/")
 client = MongoClient(MONGO_URI)
 
+
 def test_mongodb_connection_write_and_cleanup():
     db = client["facemoji"]
     collection = db["image_data"]

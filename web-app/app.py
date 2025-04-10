@@ -9,9 +9,11 @@ db = client["emotion_db"]
 img_collection = db["images"]
 result_collection = db["results"]
 
+
 @app.route("/")
 def index():
     return render_template("base.html")
+
 
 @app.route("/upload", methods=["POST"])
 def upload_image():
@@ -28,16 +30,19 @@ def upload_image():
         img_doc = {
             "image": image_data,
             "timestamp": datetime.now(timezone.utc),
-            "analyzed": False
+            "analyzed": False,
         }
         result = img_collection.insert_one(img_doc)
-        return jsonify({
-            "status": "Image uploaded successfully!",
-            "timestamp": img_doc["timestamp"].isoformat(),
-            "id": str(result.inserted_id)
-        })
+        return jsonify(
+            {
+                "status": "Image uploaded successfully!",
+                "timestamp": img_doc["timestamp"].isoformat(),
+                "id": str(result.inserted_id),
+            }
+        )
     except Exception as e:
         import traceback
+
         print("Error in /upload:", traceback.format_exc())
         return jsonify({"error": str(e)}), 500
 
@@ -46,5 +51,6 @@ def upload_image():
 def get_result():
     pass
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=3001)
