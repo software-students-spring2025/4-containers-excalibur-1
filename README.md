@@ -9,7 +9,7 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 
 ## Team Members
 - **Peng Jiang**: [PengJiang-Victor](https://github.com/PengJiang-Victor)
-- ****: []()
+- **Jialiang Tang**: [JialiangTang1](https://github.com/JialiangTang1)
 - **Haoxuan Lin(Steve)**: [Echoudexigaigu](https://github.com/Echoudexigaigu)
 - ****: []()
 
