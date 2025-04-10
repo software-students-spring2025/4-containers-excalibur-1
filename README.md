@@ -7,8 +7,13 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 ---
 
 ## Team Members
+<<<<<<< HEAD
 - **Steve Lin**: [Jialiang Tang](https://github.com/JialiangTang1)
 - **Haohan Fang**: [FrankFangH](https://github.com/FrankFangH)
+=======
+- **Peng Jiang**: [PengJiang-Victor](https://github.com/PengJiang-Victor)
+- ****: []()
+>>>>>>> main
 - **Haoxuan Lin(Steve)**: [Echoudexigaigu](https://github.com/Echoudexigaigu)
 - **Peng Jiang(Victor)**: [PengJiang-Victor](https://github.com/PengJiang-Victor)
 
@@ -18,6 +23,7 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 
 Facemoji is software that recognizes facial expressions in real time, processing emotions 10 times per second. Based on the strongest emotion detected, it outputs corresponding emoji packs with initiated algorithms, transforming users' facial expressions into real-time emojis.
 
+<<<<<<< HEAD
 ---
 
 ## Project Structure
@@ -45,6 +51,26 @@ Facemoji is software that recognizes facial expressions in real time, processing
 git clone https://github.com/software-students-spring2025/4-containers-excalibur-1
 cd 4-containers-excalibur-1
 ```
+=======
+## Running the System
+
+1. **Clone the repository:**
+
+```bash
+git clone https://github.com/software-students-spring2025/4-containers-excalibur-1.git
+cd 4-containers-excalibur-1
+```
+
+2. **Start all services with Docker Compose:**
+```bash
+docker compose up -d
+```
+
+2. **Access the web application:**
+```
+http://localhost:3001
+```
+>>>>>>> main
 
 ### 2. Set Up Environment Variables
 
