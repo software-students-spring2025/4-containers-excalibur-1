@@ -86,15 +86,30 @@
 
           const result = await res.json();
 
-          if (result.error) {
+            if (result.error) {
             statusText.textContent = "Error: " + result.error;
             timestampText.textContent = "";
             docIdText.textContent = "";
-          } else {
-            statusText.textContent = "Emotion detected!";
-            timestampText.textContent = "Emotions: " + JSON.stringify(result);
+            } else {
+            // find highest percentage of emotion
+            const topEmotion = Object.entries(result).reduce((max, entry) =>
+                entry[1] > max[1] ? entry : max
+            )[0];
+
+            const emojiMap = {
+                angry: "😠",
+                disgust: "🤢",
+                fear: "😱",
+                happy: "😄",
+                neutral: "😐",
+                sad: "😢",
+                surprise: "😲"
+            };
+            const emoji = emojiMap[topEmotion] || "❓";
+            statusText.textContent = `Emotion: ${topEmotion} ${emoji}`;
+            timestampText.textContent = "";
             docIdText.textContent = "Results have been saved.";
-          }
+            }
         } catch (err) {
           statusText.textContent = "Prediction failed: " + err.message;
           statusText.style.color = "red";
