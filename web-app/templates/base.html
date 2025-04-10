@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Facemoji</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
-<body>
-  <h1>Hi, welcome to Facemoji!</h1>
-  <video id="video" width="640" height="480" autoplay></video>
-  <canvas id="canvas" style="display:none;"></canvas>
-  <br>
-  <button id="capture">Capture & Upload</button>
-  <button id="predict">Predict Emotion</button>
-
-  <p id="status">Status: Waiting for capture...</p>
-  <p id="timestamp"></p>
-  <p id="docId"></p>
+  <head>
+    <title>Facemoji</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to <span class="highlight">Facemoji</span></h1>
+      <video id="video" width="640" height="480" autoplay></video>
+      <canvas id="canvas" style="display:none;"></canvas>
+  
+      <div class="buttons">
+        <button id="capture">📸 Capture & Upload</button>
+        <button id="predict">🤖 Predict Emotion</button>
+      </div>
+  
+      <div class="status-box">
+        <p id="status">Status: Waiting for capture...</p>
+        <p id="timestamp"></p>
+        <p id="docId"></p>
+      </div>
+    </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
