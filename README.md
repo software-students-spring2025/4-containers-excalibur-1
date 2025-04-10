@@ -25,7 +25,7 @@ Facemoji is software that recognizes facial expressions in real time, processing
 ## Project Structure
 
 - `web-app/`: Frontend and backend for user-facing application
-- `machine-learning-client/`: ML service that processes images and detects emotions
+- `machine-learning-client/`: ML service that processes images and detects emotions (We use [fer](https://github.com/justinshenk/fer) as our model)
 - `docker-compose.yml`: Combines all services into a unified development environment
 
 ---
