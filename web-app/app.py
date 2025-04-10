@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import base64
 from pymongo import MongoClient
 from datetime import datetime, timezone
+from emoji import get_emojis_from_faces
 
 app = Flask(__name__)
 client = MongoClient("mongodb://127.0.0.1:27017/")
@@ -46,6 +47,17 @@ def upload_image():
         print("Error in /upload:", traceback.format_exc())
         return jsonify({"error": str(e)}), 500
 
+@app.route("/get_emoji", methods=["POST"])
+def get_emoji():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Missing emotion data"}), 400
+
+        result = get_emojis_from_faces(data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/result")
 def get_result():

@@ -6,7 +6,7 @@ def extraction(faces):
         "fear": 1,
         "surprise": 1,
         "disgust": 1,
-        "neutral": 1,
+        "neutral": 0.5,
     }
     emotion_dicts = []
     for face in faces:

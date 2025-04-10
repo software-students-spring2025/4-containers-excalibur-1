@@ -10,7 +10,7 @@
   <canvas id="canvas" style="display:none;"></canvas>
   <br>
   <button id="capture">Capture & Upload</button>
-  <button id="predict">Predict Emotion</button>  <!-- New button for prediction -->
+  <button id="predict">Predict Emotion</button>
 
   <p id="status">Status: Waiting for capture...</p>
   <p id="timestamp"></p>
@@ -33,7 +33,7 @@
           statusText.textContent = "Status: Camera error - " + err.message;
         });
 
-      // Capture & Upload button logic
+      // Upload logic
       document.getElementById("capture").onclick = async () => {
         const ctx = canvas.getContext("2d");
         canvas.width = video.videoWidth;
@@ -43,7 +43,6 @@
         const base64Image = canvas.toDataURL("image/jpeg");
 
         try {
-          // Send the image directly to the /upload route for storage
           const res = await fetch("/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -67,7 +66,7 @@
         }
       };
 
-      // Predict Emotion button logic
+      // Predict logic
       document.getElementById("predict").onclick = async () => {
         const ctx = canvas.getContext("2d");
         canvas.width = video.videoWidth;
@@ -77,8 +76,8 @@
         const base64Image = canvas.toDataURL("image/jpeg");
 
         try {
-          // Send the image directly to the /predict_from_webapp route for emotion prediction
-          const res = await fetch("http://localhost:8000/predict_from_webapp", {  // Update the URL if needed
+          // Step 1: Send image to model server
+          const res = await fetch("http://localhost:8000/predict_from_webapp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ image: base64Image })
@@ -86,30 +85,30 @@
 
           const result = await res.json();
 
-            if (result.error) {
+          if (result.error) {
             statusText.textContent = "Error: " + result.error;
             timestampText.textContent = "";
             docIdText.textContent = "";
-            } else {
-            // find highest percentage of emotion
-            const topEmotion = Object.entries(result).reduce((max, entry) =>
-                entry[1] > max[1] ? entry : max
-            )[0];
+          } else {
+            // Step 2: Send result to /get_emoji to get emoji
+            const res2 = await fetch("/get_emoji", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(result)
+            });
 
-            const emojiMap = {
-                angry: "😠",
-                disgust: "🤢",
-                fear: "😱",
-                happy: "😄",
-                neutral: "😐",
-                sad: "😢",
-                surprise: "😲"
-            };
-            const emoji = emojiMap[topEmotion] || "❓";
-            statusText.textContent = `Emotion: ${topEmotion} ${emoji}`;
-            timestampText.textContent = "";
-            docIdText.textContent = "Results have been saved.";
+            const emojiData = await res2.json();
+
+            if (emojiData.error) {
+              statusText.textContent = "Error: " + emojiData.error;
+              timestampText.textContent = "";
+              docIdText.textContent = "";
+            } else {
+              statusText.textContent = `Emotion: ${emojiData.emotion} ${emojiData.emoji}`;
+              timestampText.textContent = "";
+              docIdText.textContent = "Results have been saved.";
             }
+          }
         } catch (err) {
           statusText.textContent = "Prediction failed: " + err.message;
           statusText.style.color = "red";
