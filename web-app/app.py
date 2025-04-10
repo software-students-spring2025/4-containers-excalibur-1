@@ -4,8 +4,7 @@ from datetime import datetime, timezone
 from emoji import get_emojis_from_faces
 import os
 app = Flask(__name__)
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://mongodb:27017/")  # Mongo URI from environment variable
-client = MongoClient(MONGO_URI)
+client = MongoClient("mongodb://mongodb:27017/")
 db = client["emotion_db"]
 img_collection = db["images"]
 result_collection = db["results"]
