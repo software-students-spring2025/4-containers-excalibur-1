@@ -1,0 +1,10 @@
+[packages]
+flask = "*"
+opencv-python = "*"
+Pillow = "*"
+fer = "*"
+pymongo = "*"
+
+[dev-packages]
+pylint = "*"
+pytest = "*"
