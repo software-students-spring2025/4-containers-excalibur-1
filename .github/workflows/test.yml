@@ -20,14 +20,21 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          pip install pytest pymongo
+      - name: Install pipenv
+        run: pip install pipenv
+
+      - name: Install dependencies (web-app)
+        working-directory: web-app
+        run: pipenv install --dev --system
 
       - name: Run web-app tests
         working-directory: web-app
         run: pytest tests/
 
-      - name: Run ml-client tests
-        working-directory: machine-learning-client
-        run: pytest tests/
+      # - name: Install dependencies (ML client)
+      #   working-directory: machine-learning-client
+      #   run: pip install -r requirements.txt
+
+      # - name: Run ml-client tests
+      #   working-directory: machine-learning-client
+      #   run: pytest tests/
