@@ -6,4 +6,9 @@ opencv-python
 Pillow
 numpy==1.26.4
 moviepy
+imageio
+imageio-ffmpeg
+decorator
+tqdm
+proglog
 tensorflow>=1.7

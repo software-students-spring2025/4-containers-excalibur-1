@@ -34,6 +34,23 @@ services:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
     restart: unless-stopped
+    
+  web-tests:
+    build: ./web-app
+    depends_on:
+      - mongodb
+    command: ["pytest", "tests/"]
+    volumes:
+      - ./web-app:/app
+
+  ml-tests:
+    build: ./machine-learning-client
+    depends_on:
+      - mongodb
+    command: ["pytest", "tests/"]
+    volumes:
+      - ./machine-learning-client:/app
+
 
 volumes:
   mongo-data:

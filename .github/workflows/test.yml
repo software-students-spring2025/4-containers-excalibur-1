@@ -1,0 +1,33 @@
+name: CI Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pytest pymongo
+
+      - name: Run web-app tests
+        working-directory: web-app
+        run: pytest tests/
+
+      - name: Run ml-client tests
+        working-directory: machine-learning-client
+        run: pytest tests/

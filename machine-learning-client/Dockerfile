@@ -13,9 +13,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file and install Python packages
-COPY requirement.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirement.txt
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install pytest
 
 # Copy the rest of the ML client code
 COPY . .
